@@ -1,12 +1,15 @@
 #nullable enable
 using System;
+using GodotDotnetLibraries;
 using Godot;
 
 namespace InputSystem;
 
-// Autoload
-public partial class InputController : Node {
+public partial class InputController : Node, IAutoload {
     public event Action<InputEventDto>? InputFromPlayer;
+    public AutoloadId Id { get; } = AutoloadId.InputController;
+
+    public InputController() { }
 
     public override void _Input(InputEvent @event) {
         switch (@event) {
