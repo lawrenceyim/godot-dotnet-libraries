@@ -9,7 +9,7 @@ public partial class InputController : Node, IAutoload {
     public event Action<InputEventDto>? InputFromPlayer;
     public AutoloadId Id { get; } = AutoloadId.InputController;
 
-    public InputController() { }
+    private InputController() { }
 
     public override void _Input(InputEvent @event) {
         switch (@event) {

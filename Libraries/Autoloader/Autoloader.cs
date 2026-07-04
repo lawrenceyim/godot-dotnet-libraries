@@ -1,6 +1,7 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Reflection;
 using Godot;
 using InputSystem;
 
@@ -17,9 +18,20 @@ public class Autoloader {
         SceneTree tree = (SceneTree)Engine.GetMainLoop();
         Node root = tree.Root;
 
-        foreach (object obj in _autoloadTypes.Select(Activator.CreateInstance)) {
-            root.CallDeferred(Node.MethodName.AddChild, obj as Node);
-            IAutoload autoload = (IAutoload)obj;
+        foreach (Type type in _autoloadTypes) {
+            ConstructorInfo? ctor = type.GetConstructor(
+                BindingFlags.Instance | BindingFlags.NonPublic,
+                binder: null,
+                Type.EmptyTypes,
+                modifiers: null);
+
+            object? obj = ctor?.Invoke(null);
+
+            if (obj is not (Node node and IAutoload autoload)) {
+                continue;
+            }
+
+            root.CallDeferred(Node.MethodName.AddChild, node);
             _autoloads.Add(autoload.Id, autoload);
         }
     }
