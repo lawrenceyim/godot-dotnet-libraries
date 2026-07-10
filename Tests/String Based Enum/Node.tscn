@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cf60jygjmdqpl"]
+
+[ext_resource type="Script" uid="uid://clbasc47rusn3" path="res://Tests/String Based Enum/StringBasedEnum.cs" id="1_haqkt"]
+
+[node name="Node" type="Node2D" unique_id=1223703487]
+script = ExtResource("1_haqkt")
+Priority = 5
+SelectedItem = "Sword"
